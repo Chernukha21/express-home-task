@@ -22,7 +22,7 @@ export const tasks = [
     },
 ];
 
-export const getTasks = () => tasks;
+export const getTasks = (page, results) => tasks.slice((page - 1) * results, page * results);
 
 export const getTaskById = (id) => {
     return tasks.find((task) => task.id === id);
