@@ -37,6 +37,16 @@ VALUES
   Створити базу даних та таблицю за наступною схемою:
     STUDENTS(id, first_name, last_name, birthday, phone_number, group, avg_mark, gender, entered_at, department)
 
+
+    CREATE TYPE gender_enum AS ENUM ('male', 'female');
+
+    ALTER TABLE students
+    DROP CONSTRAINT IF EXISTS students_gender_check;
+
+    ALTER TABLE students
+    ALTER COLUMN gender TYPE gender_enum
+    USING gender::gender_enum;
+
   CREATE TABLE students (
                           id SERIAL PRIMARY KEY,
                           first_name VARCHAR(64) NOT NULL,
@@ -44,7 +54,7 @@ VALUES
                           birthday DATE CHECK (birthday <= CURRENT_DATE),
                           phone_number VARCHAR(20) NOT NULL UNIQUE,
                           "group" VARCHAR(20) NOT NULL,
-                          avg_mark FLOAT(5, 2) CHECK (avg_mark >= 0 AND avg_mark <= 100),
+                          avg_mark NUMERIC(5, 2) CHECK (avg_mark >= 0 AND avg_mark <= 100),
                           gender VARCHAR(10) CHECK (gender IN ('male', 'female')),
                           entered_at SMALLINT NOT NULL CHECK (entered_at >= 1900 AND entered_at <= 2026),
                           department VARCHAR(100) NOT NULL
@@ -66,7 +76,10 @@ VALUES
     ('Anna', 'Shevchenko', '2005-09-03', '+380501234567', 'FE-101', 92.30, 'female', 2022, 'Computer Science'),
     ('Oleh', 'Bondarenko', '2003-11-21', '+380931112244', 'ME-202', 76.80, 'male', 2020, 'Mechanical Engineering');
 
-  */
+    ALTER TABLE students
+    ALTER COLUMN avg_mark TYPE NUMERIC(5, 2)
+        USING avg_mark::NUMERIC(5, 2);
+*/
 
 //PostgreSQL. Запити на вибірку. Оновлення даних і таблиць
 
