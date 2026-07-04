@@ -32,6 +32,26 @@ CREATE TABLE exams (
                            REFERENCES courses(id_course)
 );
 
+
+
+ALTER TABLE exams
+    ADD CONSTRAINT fk_exams_student
+        FOREIGN KEY (id_stud)
+            REFERENCES students(id_stud)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+
+    ADD CONSTRAINT fk_exams_course
+        FOREIGN KEY (id_course)
+            REFERENCES courses(id_course)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE;
+
+ALTER TABLE exams
+    ADD CONSTRAINT exams_mark_check
+        CHECK (mark BETWEEN 1 AND 5);
+
+
 INSERT INTO students (
     name,
     surname,
